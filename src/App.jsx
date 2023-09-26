@@ -43,6 +43,7 @@ function App() {
     visibility =  weatherData.current.visibility/1000;
   }
 
+  //set display units
   if (units === 'metric') {
     temp_unit = '°C',
     wind_speed_unit = 'm/s'

@@ -10,8 +10,6 @@ body {
     line-height: 19px;
     max-width: 100%;
     overflow-x: hidden;
-    /* overflow: hidden; */
-
 }
 
 .App {
@@ -233,7 +231,6 @@ button {
     height: 40px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.3);
-    /* transform: rotate(-150deg); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -277,8 +274,6 @@ button {
     margin-top: 2px;
     float: right;
 }
-
-/* sidemenu search variant */
 
 .side_top_search_section {
     display: flex;
@@ -339,8 +334,6 @@ button {
 .search_result:hover { 
   border: 1px solid #616475;
 }
-
-/* Reponsive settings */
 
 @media (max-width: 1220px) {
     .side_panel {
