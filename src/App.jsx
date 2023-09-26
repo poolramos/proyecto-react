@@ -26,10 +26,8 @@ function App() {
     getWeatherData(location.lat, location.lon, units)
   }, [location, units])
 
-  //set time  parameters from date object
   let {weekDay, date, month} = getConvertedDateObject();
   
-  // Declare and set weather parameters if it has been alreday fetched
   let currentWeatherIcon, currentTemp, currentWeatherDesc, fiveDayWeather, windSpeed, wind_deg, wind_direction, humidity, pressure, visibility, temp_unit, wind_speed_unit;
 
   if (weatherData) {
@@ -59,7 +57,6 @@ function App() {
  
 
   async function getWeatherData(lat, lon, units) {
-    // const res = await fetch(`/mock_api_data_${units}.json`)
     const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=69644e28c6a9c6d7c04f95ff1035a799&units=${units}&exclude=alerts,minutely,hourly`)
     const data = await res.json();
     setWeather(data)
