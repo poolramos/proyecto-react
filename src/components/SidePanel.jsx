@@ -53,29 +53,33 @@ async function searchLocationNameByCoords(lat, lon) {
 }
 
 async function getCurrentLocation() {
+  try {
+    if (navigator.geolocation) {
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
 
-  let newLat, newLon, newName;
+      const newLat = position.coords.latitude;
+      const newLon = position.coords.longitude;
+      
+      const res = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${newLat}&lon=${newLon}&limit=1&appid=1dde84c245e7a1646cb1025dad917e7b`);
+      const data = await res.json();
+      const newName = data[0].name;
 
-  async function findCityAndUpdateLocation(position) {
-    newLat = position.coords.latitude;
-    newLon = position.coords.longitude;
-    newName = await searchLocationNameByCoords(newLat, newLon)
-
-    updateLocation({
-      locName: newName,
-      lat: newLat,
-      lon: newLon
-    })
-
-  }
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(findCityAndUpdateLocation);
-    
-  } else {
-    console.log("Location detection not supprted")
+      updateLocation({
+        locName: newName,
+        lat: newLat,
+        lon: newLon
+      });
+    } else {
+      console.log("Location detection not supported");
+    }
+  } catch (error) {
+    console.error("Error getting user location:", error);
   }
 }
+
+
 
 function toggleSidePanel() {
   setSearchClosed(prev => !prev);
@@ -89,7 +93,10 @@ return (
           <>
             <div className='side_top_section'>
               <button className="btn_search_location" onClick={toggleSidePanel}>Seach for places</button>
-              <button className="btn_circle get_user_location" onClick={getCurrentLocation}><span className="material-symbols-outlined">my_location</span></button>
+              <button className="btn_circle get_user_location" onClick={getCurrentLocation}>
+  <span className="material-symbols-outlined">my_location</span>
+</button>
+
             </div>
             <div className='weather_illustration_part'>
               <img src='/Cloud-background.png' className="weather_illustration_bg" alt="" />
